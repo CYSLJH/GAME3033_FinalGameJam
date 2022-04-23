@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Food"))
         {
+            AudioManager.PlaySound(AudioManager.Sound.Food);
             gameManager.time += 3;
             food++;
             other.gameObject.SetActive(false);

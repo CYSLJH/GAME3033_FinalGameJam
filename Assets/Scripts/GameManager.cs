@@ -72,11 +72,17 @@ public class GameManager : MonoBehaviour
     {
         winPanel.SetActive(true);
         losePanel.SetActive(false);
+        timerDisplay.enabled = false;
     }
 
     public void Lost()
     {
         losePanel.SetActive(true);
         winPanel.SetActive(false);
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
