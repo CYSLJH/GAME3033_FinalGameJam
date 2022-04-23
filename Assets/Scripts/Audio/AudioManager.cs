@@ -8,9 +8,7 @@ public class AudioManager : MonoBehaviour
     public enum Sound //when adding enums make sure to update array order in Assets/Resources -> AudioAsset Prefab
     {
         PlayerMove,
-        Firing,
-        Reloading,
-        ZombieAttack,
+        Food
     }
 
     public enum Music //when adding enums make sure to update array order in Assets/Resources -> AudioAsset Prefab

@@ -5,13 +5,21 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool isFiring;
-    public bool isReloading;
     public bool isJumping;
     public bool isRunning;
-    public bool isAiming;
-    public bool inInventory;
     public bool isPaused;
+
+    public GameManager gameManager;
+
+    int food = 0;
+
+    private void Update()
+    {
+        if(food == 10)
+        {
+            gameManager.Won();
+        }
+    }
 
     public void OnPause(InputValue value)
     {
@@ -23,6 +31,15 @@ public class PlayerController : MonoBehaviour
         {
             isPaused = true;
         }
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Food"))
+        {
+            gameManager.time += 3;
+            food++;
+            other.gameObject.SetActive(false);
+        }
     }
 }
