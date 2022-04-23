@@ -20,8 +20,8 @@ public class MovementComponent : MonoBehaviour
 
     public float aimSensitivity = 0.2f;
 
-    public readonly int movementXHash = Animator.StringToHash("MovementX");
-    public readonly int movementYHash = Animator.StringToHash("MovementY");
+    //public readonly int movementXHash = Animator.StringToHash("MovementX");
+    //public readonly int movementYHash = Animator.StringToHash("MovementY");
     public readonly int isJumpingHash = Animator.StringToHash("isJumping");
     public readonly int isRunningHash = Animator.StringToHash("isRunning");
     public readonly int verticalAimHash = Animator.StringToHash("VerticalAim");
@@ -31,11 +31,6 @@ public class MovementComponent : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody>();
         playerController = GetComponent<PlayerController>();
-    }
-
-    private void Start()
-    {
-
     }
 
     private void Update()
@@ -73,35 +68,37 @@ public class MovementComponent : MonoBehaviour
 
             followTransform.transform.localEulerAngles = angles;
 
-            //rotate the player to face where we are looking
+            ////rotate the player to face where we are looking
             transform.rotation = Quaternion.Euler(0, followTransform.transform.rotation.eulerAngles.y, 0);
             followTransform.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
-
+            
             if (playerController.isJumping) return;
             if (!(inputVector.magnitude > 0)) moveDirection = Vector3.zero;
-
+            
             moveDirection = transform.forward * inputVector.y + transform.right * inputVector.x;
             float currentSpeed = playerController.isRunning ? runSpeed : walkSpeed;
-
+            
             Vector3 movementDirection = moveDirection * (currentSpeed * Time.deltaTime);
-
+            
             transform.position += movementDirection;
         }
-
 
     }
 
     public void OnMovement(InputValue value)
     {
         inputVector = value.Get<Vector2>();
-        playerAnimator.SetFloat(movementXHash, inputVector.x);
-        playerAnimator.SetFloat(movementYHash, inputVector.y);
-    }
+        //playerAnimator.SetFloat(movementXHash, inputVector.x);
+        //playerAnimator.SetFloat(movementYHash, inputVector.y);
 
-    public void OnRun(InputValue value)
-    {
-        playerController.isRunning = value.isPressed;
-        playerAnimator.SetBool(isRunningHash, playerController.isRunning);
+        if(inputVector.x == 1 || inputVector.x == -1 || inputVector.y == 1 || inputVector.y == -1)
+        {
+            playerAnimator.SetBool(isRunningHash, true);
+        }
+        else
+        {
+            playerAnimator.SetBool(isRunningHash, false);
+        }
     }
 
     public void OnJump(InputValue value)
